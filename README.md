@@ -9,7 +9,7 @@ Este laboratorio tiene como propósito analizar la variabilidad de la frecuencia
 - Aplicar herramientas de análisis temporal y no lineal (diagrama de Poincaré) para caracterizar la HRV.<br>
 - Interpretar resultados fisiológicos relacionados con actividad simpática y parasimpática. <br> 
 ## PROCEDIMIENTO 
-<img width="627" height="783" alt="image" src="https://github.com/user-attachments/assets/d07f50e0-a005-4168-b820-c8ecad102284" />
+<img width="627" height="683" alt="image" src="https://github.com/user-attachments/assets/d07f50e0-a005-4168-b820-c8ecad102284" />
 
 # PARTE A - Fundamento teórico y adquisición de señal
 ## Descripción 
