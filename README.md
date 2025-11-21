@@ -8,12 +8,13 @@ Este laboratorio tiene como propósito analizar la variabilidad de la frecuencia
 - Comparar la respuesta autonómica del sujeto entre reposo y lectura en voz alta. <br>
 - Aplicar herramientas de análisis temporal y no lineal (diagrama de Poincaré) para caracterizar la HRV.<br>
 - Interpretar resultados fisiológicos relacionados con actividad simpática y parasimpática. <br> 
-## PROCEDIMIENTO 
-<img width="327" height="883" alt="image" src="https://github.com/user-attachments/assets/d07f50e0-a005-4168-b820-c8ecad102284" />
 
 # PARTE A - Fundamento teórico y adquisición de señal
 ## Descripción 
 En esta parte se realiza la investigación teórica necesaria para comprender la variabilidad de la frecuencia cardiaca (HRV) y su relación con el sistema nervioso autónomo. Luego, se adquiere la señal ECG de un sujeto en dos condiciones distintas: reposo y lectura en voz alta, con el fin de analizar cómo cambia el balance simpático-parasimpático. <br> 
+## Diagrama 
+<img width="800" height="1448" alt="Infografía de periódico moderno ordenado colorido" src="https://github.com/user-attachments/assets/75472c18-b002-4268-877e-0cdedf6e2a97" /><br> 
+
 
 ##  𝘼𝙘𝙩𝙞𝙫𝙞𝙙𝙖𝙙 𝙎𝙞𝙢𝙥𝙖𝙩𝙞𝙘𝙖 𝙮 𝙋𝙖𝙧𝙖𝙨𝙞𝙢𝙥𝙖𝙩𝙞𝙘𝙖 𝙙𝙚𝙡 𝙨𝙞𝙨𝙩𝙚𝙢𝙖 𝙣𝙚𝙧𝙫𝙞𝙤𝙨𝙤 𝙖𝙪𝙩𝙤𝙣𝙤𝙢𝙤 
 El cuerpo humano está preparado para mantener un equilibrio entre la actividad y el descanso. Esto es posible gracias al sistema nervioso autónomo, encargado de regular muchas funciones involuntarias del organismo. Dentro de este sistema se encuentran el sistema nervioso simpático y el sistema nervioso parasimpático, dos fuerzas opuestas que actúan de manera complementaria para preservar el bienestar y la estabilidad del cuerpo.<br>
