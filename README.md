@@ -54,7 +54,7 @@ El diagrama de Poincaré es una herramienta empleada para el análisis no lineal
 
 Cuando el diagrama de Poincaré muestra una figura con forma de elipse estrecha y alargada, esto se interpreta como una baja variabilidad cardiaca. En esta condición, los intervalos entre latidos varían muy poco, lo cual sugiere que el sistema nervioso autónomo tiene una capacidad limitada para adaptarse a cambios internos o externos. En contraste, una figura más amplia, dispersa o aproximada a un círculo indica una mayor variabilidad cardíaca y un mejor equilibrio entre las ramas simpática y parasimpática.
 
-A diferencia de los métodos lineales tradicionales, el diagrama de Poincaré aporta una perspectiva geométrica y topológica de la dinámica del ritmo cardíaco, permitiendo identificar comportamientos no lineales que no pueden ser detectados mediante estadísticas convencionales. Por esta razón, se utiliza con frecuencia para analizar la serie R-R y evaluar el control autonómico del corazón en situaciones de reposo, estrés o enfermedad.[4]
+A diferencia de los métodos lineales tradicionales, el diagrama de Poincaré aporta una perspectiva geométrica y topológica de la dinámica del ritmo cardíaco, permitiendo identificar comportamientos no lineales que no pueden ser detectados mediante estadísticas convencionales. Por esta razón, se utiliza con frecuencia para analizar la serie R-R y evaluar el control autonómico del corazón en situaciones de reposo, estrés o enfermedad.[4]<br>
 <img width="146" height="151" alt="image" src="https://github.com/user-attachments/assets/5f0d411d-16bc-4f6b-9875-2bffc1d23085" /><br>
 
 
