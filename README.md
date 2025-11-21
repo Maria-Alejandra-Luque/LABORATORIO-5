@@ -424,7 +424,8 @@ En la Parte C del código se utilizan los intervalos R-R obtenidos previamente p
 
 <img width="518" height="480" alt="image" src="https://github.com/user-attachments/assets/b094e4cc-f0f9-41f8-ade8-c17aad8c2630" />
 <img width="501" height="500" alt="image" src="https://github.com/user-attachments/assets/c752a722-cd5e-414a-9ace-ee02c911898a" />
-<img width="252" height="198" alt="image" src="https://github.com/user-attachments/assets/51d84049-fe8d-4f10-b0e2-e64cfa37554f" />
+<img width="252" height="198" alt="image" src="https://github.com/user-attachments/assets/51d84049-fe8d-4f10-b0e2-e64cfa37554f" /><br>
+
 Los diagramas de Poincaré muestran un comportamiento claramente diferente entre el segmento de reposo y el segmento de lectura. En reposo, la nube de puntos es compacta y con poca dispersión, indicando un ritmo cardíaco estable y una baja variabilidad, coherente con un predominio parasimpático. Durante la lectura en voz alta, la nube aumenta su dispersión tanto en SD1 como en SD2, reflejando una mayor variabilidad instantánea y a largo plazo. Los índices CSI y CVI también aumentan, lo que sugiere una mayor activación simpática asociada al esfuerzo cognitivo y la variación respiratoria. En conjunto, los resultados evidencian que la lectura en voz alta genera un incremento en la variabilidad cardíaca y activa el sistema nervioso autónomo en comparación con el estado de reposo.
 
 
