@@ -46,6 +46,9 @@ Para calcularla, primero se detectan los picos R de la señal y se mide el inter
 La HRV se ha convertido en un indicador útil tanto en investigación como en clínica. Una variabilidad alta suele relacionarse con buena salud y adaptación fisiológica, mientras que una variabilidad baja puede asociarse con estrés o alteraciones autonómicas. Por ello, el análisis de HRV a partir del ECG es considerado un método no invasivo y confiable para evaluar el control nervioso del corazón.<br> 
 <img width="1508" height="823" alt="image" src="https://github.com/user-attachments/assets/6fa7fa5f-ad91-4ef0-8d71-5e6c6b486071" /><br>
 
+##  𝘿𝙞𝙖𝙜𝙧𝙖𝙢𝙖 𝙙𝙚 𝙥𝙤𝙞𝙣𝙘𝙖𝙧𝙚 𝙘𝙤𝙢𝙤 𝙝𝙚𝙧𝙧𝙖𝙢𝙞𝙚𝙣𝙩𝙖 𝙙𝙚 𝙖𝙣𝙖𝙡𝙞𝙨𝙞𝙨 𝙙𝙚 𝙡𝙖 𝙎𝙚𝙣̃𝙖𝙡 𝙍-
+El diagrama de Poincaré es una herramienta empleada para el análisis no lineal de la variabilidad de la frecuencia cardiaca a partir de la serie de intervalos R-R, es decir, los tiempos entre latidos consecutivos. Mediante una transformación matemática, esta información se representa de forma gráfica para visualizar la dinámica del ritmo cardíaco. En este método, cada intervalo R-R se coloca en relación con el siguiente (RRₙ frente a RRₙ₊₁), generando una nube de puntos en un plano. La forma y dispersión de esta nube reflejan el comportamiento dinámico del sistema cardiovascular, permitiendo identificar niveles de regularidad, variabilidad o patrones particulares. Al ser una representación bidimensional, facilita la comprensión de cómo cambian los intervalos entre latidos a lo largo del tiempo y ofrece una visión más clara del comportamiento general del sistema nervioso autónomo.
+<img width="974" height="1021" alt="image" src="https://github.com/user-attachments/assets/92e37d24-8819-431b-aceb-ed00e0169506" /><br>
 
 
 
@@ -63,11 +66,10 @@ En esta sección se implementan las etapas de procesamiento digital necesarias p
 
 ## CÓDIGO 
 ```
-# ============================================
+
 #      LAB ECG - PREPROCESAMIENTO + HRV
 #   FILTRO IIR + R-PEAKS + RR + POINCARÉ
 #   ZOOM EN QRS + PICOS R MORADOS + RR MARCADO
-# ============================================
 
 import numpy as np
 import pandas as pd
@@ -75,13 +77,12 @@ import matplotlib.pyplot as plt
 from scipy import signal
 from google.colab import drive
 
-# ============================================
 # 1. MONTAR GOOGLE DRIVE
-# ============================================
+
 drive.mount('/content/drive')
-# ============================================
+
 # 2. PARÁMETROS
-# ============================================
+
 Fs = 500.0
 seg_duration_s = 2 * 60  # 2 minutos
 
@@ -93,9 +94,8 @@ a = np.array([1.0, -3.31025739, 4.11831107, -2.30421103, 0.49616466])
 Este fragmento define el inicio del procesamiento del laboratorio de ECG. Se importan las librerías necesarias para cargar datos, filtrarlos y graficar resultados. Luego se monta Google Drive para acceder a los archivos del experimento. Después se establecen los parámetros principales: la frecuencia de muestreo de la señal (500 Hz) y la duración de cada segmento de análisis (2 minutos). Finalmente, se declaran los coeficientes b y a del filtro digital IIR de orden 4, que será utilizado más adelante para limpiar la señal ECG antes de realizar la detección de picos R y el análisis de HRV. <br>
 
 ```
-# ============================================
 # 3. ECUACIÓN EN DIFERENCIAS
-# ============================================
+
 def print_difference_equation():
     print("\n=== ECUACIÓN EN DIFERENCIAS DEL FILTRO IIR ===\n")
     print(
@@ -113,9 +113,9 @@ def print_difference_equation():
 Este fragmento de código carga una señal ECG, la filtra con un IIR de orden 4, detecta los picos R usando un método basado en derivada–cuadrado–ventana móvil, calcula los intervalos RR y sus versiones interpoladas, obtiene los índices de variabilidad cardíaca (SD1, SD2, CSI y CVI) y genera diversas gráficas: señal original vs filtrada, picos R marcados en morado, zoom del complejo QRS, curva RR(t) y diagramas de Poincaré para analizar la dinámica del ritmo cardiaco.. <br> 
 
 ```
-# ============================================
+
 # 4. CARGAR ECG
-# ============================================
+
 def load_ecg(path):
     df = pd.read_csv(path)
 
@@ -137,18 +137,16 @@ def load_ecg(path):
 Este fragmento lee un archivo CSV que contiene un ECG y organiza los datos según su formato: si el archivo tiene una sola columna, la toma como la señal ECG y crea el vector de tiempo usando la frecuencia de muestreo definida; si tiene dos columnas, interpreta la primera como tiempo y la segunda como la señal, calculando además la frecuencia de muestreo a partir de las diferencias entre muestras. Si el archivo no tiene 1 o 2 columnas, genera un error indicando que el formato no es válido. <br>
 
 ```
-# ============================================
 # 5. FILTRADO
-# ============================================
+
 def apply_iir(x):
     return signal.filtfilt(b, a, x)
 ```
 Este fragmento aplica el filtro IIR definido por los coeficientes b y a a la señal ECG x utilizando filtfilt(), que realiza un filtrado hacia adelante y hacia atrás para evitar el desfase y obtener una señal filtrada sin retraso en fase. En resumen, limpia la señal eliminando ruido sin distorsionar la forma del ECG.<br> 
 
 ```
-# ============================================
 # 6. DETECCIÓN DE PICOS R
-# ============================================
+
 def detect_r_peaks(ecg_segment, fs):
     diff = np.diff(ecg_segment, prepend=ecg_segment[0])
     sq = diff**2
@@ -173,9 +171,8 @@ def detect_r_peaks(ecg_segment, fs):
 Este fragmento detecta los picos R dentro de un segmento de ECG. Primero calcula la derivada de la señal y la eleva al cuadrado para resaltar los complejos QRS; luego aplica una ventana móvil de 150 ms para obtener una señal integrada que facilita la detección. A partir de esta señal integrada, busca picos usando un umbral adaptativo y una distancia mínima entre latidos (250 ms). Después, cada pico inicial se refina buscando, en una ventana pequeña alrededor, el máximo real del ECG para ubicar con precisión el pico R. Finalmente, devuelve la lista de picos R detectados y la señal integrada usada en el proceso.<br>
 
 ```
-# ============================================
 # 7. INTERVALOS RR
-# ============================================
+
 def compute_rr(peaks, fs):
     if len(peaks) < 2:
         return np.array([])
@@ -195,9 +192,8 @@ def interpolate_rr(peaks, rr, fs, total_len):
 Este fragmento calcula los intervalos RR y genera una versión interpolada para graficarlos de manera continua. La función compute_rr() toma las posiciones de los picos R y obtiene los intervalos RR dividiendo la diferencia entre picos consecutivos por la frecuencia de muestreo. La función interpolate_rr() usa esos RR ya calculados para construir una señal RR(t) suave: primero obtiene el tiempo exacto de cada intervalo RR, luego genera una escala temporal uniforme y finalmente interpola los valores para obtener una curva continua en milisegundos. Si no hay suficientes RR, ambas funciones devuelven resultados vacíos.<br>
 
 ```
-# ============================================
 # 9. FUNCIÓN PRINCIPAL
-# ============================================
+
 def process_ecg_file(path):
 
     print("\nCargando archivo:", path)
@@ -206,9 +202,8 @@ def process_ecg_file(path):
     print(f"Señal cargada: {len(x)} muestras — Fs={fs:.2f} Hz")
     print_difference_equation()
 
-    # -----------------------
+   
     # FILTRADO
-    # -----------------------
     x_f = apply_iir(x)
 
     plt.figure(figsize=(18,5))
@@ -223,22 +218,21 @@ Este fragmento de la función principal carga la señal ECG desde el archivo ind
 
 ```
 
-    # -----------------------
     # SEGMENTOS
-    # -----------------------
+
     seg_len = int(seg_duration_s * fs)
     seg1 = x_f[:seg_len]
     seg2 = x_f[seg_len:2*seg_len]
 
-    # -----------------------
+   
     # DETECCIÓN R
-    # -----------------------
+    
     p1, _ = detect_r_peaks(seg1, fs)
     p2, _ = detect_r_peaks(seg2, fs)
 
-    # ---------------------------------------------------------
+    
     #   ECG FILTRADA + PICOS R (MORADO)
-    # ---------------------------------------------------------
+    #
     plt.figure(figsize=(18,6))
     plt.plot(seg1, color="#FF00FF", label="ECG Filtrada")
     plt.scatter(p1, seg1[p1], color="purple", s=25, label="R-peaks")
@@ -251,9 +245,9 @@ Este fragmento de la función principal carga la señal ECG desde el archivo ind
     plt.title("Segmento 2 — ECG Filtrada + Picos R (Morado)")
     plt.legend(); plt.grid(); plt.show()
 
-    # -----------------------
+    
     # ZOOM EN QRS (Modo B)
-    # -----------------------
+    
     def zoom_qrs(seg, peaks, title):
         i1 = peaks[5] - 200
         i2 = peaks[10] + 200
@@ -272,18 +266,16 @@ Este fragmento de la función principal carga la señal ECG desde el archivo ind
 Este fragmento divide la señal ECG filtrada en dos segmentos de dos minutos, detecta los picos R en cada uno y luego genera visualizaciones que permiten evaluar la calidad de la detección. Primero calcula cuántas muestras corresponden a dos minutos y separa la señal en segmento 1 (reposo) y segmento 2 (lectura). Después aplica el algoritmo de detección de picos R a cada segmento para obtener las posiciones de los complejos QRS. Posteriormente grafica cada segmento mostrando la señal filtrada en magenta y los picos R marcados en color morado, facilitando la verificación visual de la detección. Finalmente, incluye una función que realiza un zoom alrededor de algunos complejos QRS para observarlos en detalle y confirmar que los picos detectados coinciden con la morfología real del QRS.<br>
 
 ```
-# -----------------------
+
     # RR
-    # -----------------------
     rr1 = compute_rr(p1, fs)
     rr2 = compute_rr(p2, fs)
 
     t1_rr, rr1_ts = interpolate_rr(p1, rr1, fs, len(seg1))
     t2_rr, rr2_ts = interpolate_rr(p2, rr2, fs, len(seg2))
 
-    # ---------------------------------------------------------
     # RR(t) CON MARCADORES DE RR REALES
-    # ---------------------------------------------------------
+    
     plt.figure(figsize=(18,5))
     plt.plot(t1_rr, rr1_ts, color="#FF00FF", label="RR(t) interpolado")
     plt.scatter(p1[1:]/fs, rr1*1000, color="purple", s=30, label="RR reales")
