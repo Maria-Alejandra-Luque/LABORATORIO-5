@@ -13,7 +13,7 @@ Este laboratorio tiene como propósito analizar la variabilidad de la frecuencia
 ## Descripción 
 En esta parte se realiza la investigación teórica necesaria para comprender la variabilidad de la frecuencia cardiaca (HRV) y su relación con el sistema nervioso autónomo. Luego, se adquiere la señal ECG de un sujeto en dos condiciones distintas: reposo y lectura en voz alta, con el fin de analizar cómo cambia el balance simpático-parasimpático. <br> 
 ## Diagrama 
-<img width="800" height="1448" alt="Infografía de periódico moderno ordenado colorido" src="https://github.com/user-attachments/assets/75472c18-b002-4268-877e-0cdedf6e2a97" /><br> 
+![Infografía de periódico moderno ordenado colorido](https://github.com/user-attachments/assets/de986083-a97a-49f7-a888-7099cf8e85fb)/><br> 
 
 
 ##  𝘼𝙘𝙩𝙞𝙫𝙞𝙙𝙖𝙙 𝙎𝙞𝙢𝙥𝙖𝙩𝙞𝙘𝙖 𝙮 𝙋𝙖𝙧𝙖𝙨𝙞𝙢𝙥𝙖𝙩𝙞𝙘𝙖 𝙙𝙚𝙡 𝙨𝙞𝙨𝙩𝙚𝙢𝙖 𝙣𝙚𝙧𝙫𝙞𝙤𝙨𝙤 𝙖𝙪𝙩𝙤𝙣𝙤𝙢𝙤 
@@ -52,6 +52,9 @@ La HRV se ha convertido en un indicador útil tanto en investigación como en cl
 # PARTE B - Preprocesamiento, filtrado, detección de picos R y HRV en dominio del tiempo
 ## Descripción
 En esta sección se implementan las etapas de procesamiento digital necesarias para limpiar la señal ECG, extraer los picos R y calcular los intervalos R-R. La señal es filtrada utilizando un filtro IIR diseñado por el estudiante, posteriormente se divide según las dos condiciones experimentales y se obtiene la serie temporal de HRV para cada segmento. <br> 
+##Diagrama 
+<img width="800" height="1448" alt="Infografía de periódico moderno ordenado colorido" src="https://github.com/user-attachments/assets/75472c18-b002-4268-877e-0cdedf6e2a97" /><br> 
+
 ## Diseño Filtro
 
 <img width="327" height="883" alt="image" src="imagen_2025-11-20_214947303.png" />
@@ -336,6 +339,8 @@ La gráfica muestra la variación del intervalo RR a lo largo del segundo segmen
 # PARTE C - Diagrama de Poincaré y análisis del balance autonómico
 ## Descripción
 Esta parte consiste en construir el diagrama de Poincaré para cada segmento de ECG y analizar la dispersión de los puntos para determinar cambios en la actividad simpática y vagal. Se calculan los índices CSI (simpático) y CVI (vagal) y se comparan entre reposo y lectura.<br>
+## Diagrama 
+
 
 ## CODIGO 
 ```
