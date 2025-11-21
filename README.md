@@ -18,6 +18,9 @@ En esta parte se realiza la investigación teórica necesaria para comprender la
 # PARTE B - Preprocesamiento, filtrado, detección de picos R y HRV en dominio del tiempo
 ## Descripción
 En esta sección se implementan las etapas de procesamiento digital necesarias para limpiar la señal ECG, extraer los picos R y calcular los intervalos R-R. La señal es filtrada utilizando un filtro IIR diseñado por el estudiante, posteriormente se divide según las dos condiciones experimentales y se obtiene la serie temporal de HRV para cada segmento. <br> 
+## Diseño Filtro
+<img width="327" height="883" alt="image" src="https://github.com/user-attachments/assets/d07f50e0-a005-4168-b820-c8ecad102284" />
+<img width="327" height="883" alt="image" src="https://github.com/user-attachments/assets/d07f50e0-a005-4168-b820-c8ecad102284" />
 ## CODIGO 
 ```
 # ============================================
