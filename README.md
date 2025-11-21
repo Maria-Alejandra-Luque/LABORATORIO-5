@@ -27,175 +27,247 @@ En esta sección se implementan las etapas de procesamiento digital necesarias p
 ## CODIGO 
 ```
 # ============================================
-#   PARTE B - PRE-PROCESAMIENTO + GRÁFICAS
+#      LAB ECG - PREPROCESAMIENTO + HRV
+#   FILTRO IIR + R-PEAKS + RR + POINCARÉ
+#   ZOOM EN QRS + PICOS R MORADOS + RR MARCADO
 # ============================================
+
 import numpy as np
 import pandas as pd
-from scipy import signal
 import matplotlib.pyplot as plt
-from scipy.io import wavfile
+from scipy import signal
+from google.colab import drive
 
 # ============================================
 # 1. MONTAR GOOGLE DRIVE
 # ============================================
-from google.colab import drive
 drive.mount('/content/drive')
-
 # ============================================
 # 2. PARÁMETROS
 # ============================================
 Fs = 500.0
-seg_duration_s = 2*60  # 2 minutos
+seg_duration_s = 2 * 60  # 2 minutos
 
-# Filtro IIR diseñado (orden 4)
+# Filtro IIR digital (orden 4)
 b = np.array([0.04514067, 0.0, -0.09028134, 0.0, 0.04514067])
 a = np.array([1.0, -3.31025739, 4.11831107, -2.30421103, 0.49616466])
+
 ```
-Este fragmento del código inicia la Parte B del laboratorio, correspondiente al pre-procesamiento de la señal ECG. Primero importa las librerías necesarias para análisis digital y visualización de señales, y luego monta Google Drive para acceder a los archivos del experimento. Después define los parámetros principales del procesamiento: la frecuencia de muestreo del ECG (Fs = 500 Hz) y la duración de cada segmento del análisis (2 minutos). Finalmente, se especifican los coeficientes b y a de un filtro digital IIR de orden 4, previamente diseñado para eliminar ruido de la señal ECG y permitir una detección más precisa de los picos R. <br>
+Este fragmento define el inicio del procesamiento del laboratorio de ECG. Se importan las librerías necesarias para cargar datos, filtrarlos y graficar resultados. Luego se monta Google Drive para acceder a los archivos del experimento. Después se establecen los parámetros principales: la frecuencia de muestreo de la señal (500 Hz) y la duración de cada segmento de análisis (2 minutos). Finalmente, se declaran los coeficientes b y a del filtro digital IIR de orden 4, que será utilizado más adelante para limpiar la señal ECG antes de realizar la detección de picos R y el análisis de HRV. <br>
 
 ```
 # ============================================
-# 3. FUNCIONES
+# 3. ECUACIÓN EN DIFERENCIAS
 # ============================================
+def print_difference_equation():
+    print("\n=== ECUACIÓN EN DIFERENCIAS DEL FILTRO IIR ===\n")
+    print(
+        "y[n] = "
+        + f"{b[0]:.8f} x[n] + "
+        + f"{b[1]:.8f} x[n-1] + "
+        + f"{b[2]:.8f} x[n-2] + "
+        + f"{b[3]:.8f} x[n-3] + "
+        + f"{b[4]:.8f} x[n-4] "
+        + f"- {a[1]:.8f} y[n-1] - {a[2]:.8f} y[n-2] - {a[3]:.8f} y[n-3] - {a[4]:.8f} y[n-4]"
+    )
+    print("\n(Estados iniciales = 0)\n")
+    )
+```
+Este fragmento de código carga una señal ECG, la filtra con un IIR de orden 4, detecta los picos R usando un método basado en derivada–cuadrado–ventana móvil, calcula los intervalos RR y sus versiones interpoladas, obtiene los índices de variabilidad cardíaca (SD1, SD2, CSI y CVI) y genera diversas gráficas: señal original vs filtrada, picos R marcados en morado, zoom del complejo QRS, curva RR(t) y diagramas de Poincaré para analizar la dinámica del ritmo cardiaco.. <br> 
 
-def load_ecg(path, assumed_fs=Fs):
-    """Carga CSV con encabezado o sin encabezado, TXT, WAV, MAT."""
-    if path.endswith('.csv') or path.endswith('.txt'):
-        df = pd.read_csv(path)
+```
+# ============================================
+# 4. CARGAR ECG
+# ============================================
+def load_ecg(path):
+    df = pd.read_csv(path)
 
-        # 1 columna → solo señal
-        if df.shape[1] == 1:
-            x = df.iloc[:, 0].astype(float).values
-            t = np.arange(len(x))/assumed_fs
-            return t, x, assumed_fs
+    if df.shape[1] == 1:
+        x = df.iloc[:, 0].astype(float).values
+        t = np.arange(len(x)) / Fs
+        return t, x, Fs
 
-        # 2 columnas → tiempo y señal
-        elif df.shape[1] == 2:
-            t = df.iloc[:, 0].astype(float).values
-            x = df.iloc[:, 1].astype(float).values
-            Fs_est = 1.0/np.mean(np.diff(t))
-            return t, x, Fs_est
-        else:
-            raise ValueError("El CSV tiene más de 2 columnas.")
+    elif df.shape[1] == 2:
+        t = df.iloc[:, 0].astype(float).values
+        x = df.iloc[:, 1].astype(float).values
+        Fs_est = 1.0 / np.mean(np.diff(t))
+        return t, x, Fs_est
 
-    elif path.endswith('.wav'):
-        fs, data = wavfile.read(path)
-        if data.ndim > 1:
-            data = data[:,0]
-        t = np.arange(len(data))/fs
-        return t, data.astype(float), fs
-
-    elif path.endswith('.mat'):
-        from scipy.io import loadmat
-        m = loadmat(path)
-        for k in ['ecg','ECG','signal','sig','data','x']:
-            if k in m:
-                x = np.squeeze(m[k]).astype(float)
-                t = np.arange(len(x))/assumed_fs
-                return t, x, assumed_fs
-        raise ValueError("No se encontró señal válida en .mat")
     else:
-        raise ValueError("Formato no soportado")
-def apply_iir(x, zero_phase=True):
-    if zero_phase:
-        return signal.filtfilt(b, a, x)
-    else:
-        return signal.lfilter(b, a, x)
-def detect_r_peaks(ecg_segment, fs, integrator_ms=150, min_rr_ms=250):
+        raise ValueError("El CSV debe tener 1 o 2 columnas.")
+
+```
+Este fragmento lee un archivo CSV que contiene un ECG y organiza los datos según su formato: si el archivo tiene una sola columna, la toma como la señal ECG y crea el vector de tiempo usando la frecuencia de muestreo definida; si tiene dos columnas, interpreta la primera como tiempo y la segunda como la señal, calculando además la frecuencia de muestreo a partir de las diferencias entre muestras. Si el archivo no tiene 1 o 2 columnas, genera un error indicando que el formato no es válido. <br>
+
+```
+# ============================================
+# 5. FILTRADO
+# ============================================
+def apply_iir(x):
+    return signal.filtfilt(b, a, x)
+```
+Este fragmento aplica el filtro IIR definido por los coeficientes b y a a la señal ECG x utilizando filtfilt(), que realiza un filtrado hacia adelante y hacia atrás para evitar el desfase y obtener una señal filtrada sin retraso en fase. En resumen, limpia la señal eliminando ruido sin distorsionar la forma del ECG.<br> 
+
+```
+# ============================================
+# 6. DETECCIÓN DE PICOS R
+# ============================================
+def detect_r_peaks(ecg_segment, fs):
     diff = np.diff(ecg_segment, prepend=ecg_segment[0])
     sq = diff**2
-    win = max(1, int(integrator_ms * fs / 1000))
+    win = max(1, int(150 * fs / 1000))
     integ = np.convolve(sq, np.ones(win)/win, mode='same')
 
-    dist = int(min_rr_ms * fs / 1000)
-    thresh = np.mean(integ) + 0.5*np.std(integ)
-
+    dist = int(0.25 * fs)
+    thresh = np.mean(integ) + 0.5 * np.std(integ)
     peaks, _ = signal.find_peaks(integ, distance=dist, height=thresh)
 
     refined = []
-    radius = int(0.05*fs)
+    radius = int(0.05 * fs)
     for p in peaks:
-        L = max(0, p-radius)
-        R = min(len(ecg_segment)-1, p+radius)
+        L = max(0, p - radius)
+        R = min(len(ecg_segment)-1, p + radius)
         local = L + np.argmax(ecg_segment[L:R+1])
         refined.append(local)
+
     return np.unique(refined), integ
 
-def compute_rr_from_peaks(peaks_idx, fs):
-    if len(peaks_idx) < 2:
+```
+Este fragmento detecta los picos R dentro de un segmento de ECG. Primero calcula la derivada de la señal y la eleva al cuadrado para resaltar los complejos QRS; luego aplica una ventana móvil de 150 ms para obtener una señal integrada que facilita la detección. A partir de esta señal integrada, busca picos usando un umbral adaptativo y una distancia mínima entre latidos (250 ms). Después, cada pico inicial se refina buscando, en una ventana pequeña alrededor, el máximo real del ECG para ubicar con precisión el pico R. Finalmente, devuelve la lista de picos R detectados y la señal integrada usada en el proceso.<br>
+
+```
+# ============================================
+# 7. INTERVALOS RR
+# ============================================
+def compute_rr(peaks, fs):
+    if len(peaks) < 2:
         return np.array([])
-    return np.diff(peaks_idx)/fs
+    return np.diff(peaks) / fs
 
-def clean_rr(rr_s, min_rr=0.25, max_rr=2.0):
-    mask = (rr_s >= min_rr) & (rr_s <= max_rr)
-    return rr_s[mask]
+
+# RR interpolada para graficar
+def interpolate_rr(peaks, rr, fs, total_len):
+    if len(rr) < 2:
+        return None, None
+    t_rr = peaks[1:] / fs
+    t = np.arange(total_len) / fs
+    rr_interp = np.interp(t, t_rr, rr * 1000)
+    return t, rr_interp
+
 ```
-Se definió el conjunto de funciones utilizadas para el procesamiento de la señal ECG. Se creó load_ecg() para cargar archivos en diferentes formatos y obtener tiempo, señal y frecuencia de muestreo. Se implementó apply_iir() para aplicar el filtro IIR diseñado previamente. Se definió detect_r_peaks() para detectar y refinar los picos R en cada segmento. Se creó compute_rr_from_peaks() para calcular los intervalos R-R y se añadió clean_rr() para depurar los intervalos no válidos. Estas funciones apoyan las etapas posteriores del análisis de HRV.<br> 
+Este fragmento calcula los intervalos RR y genera una versión interpolada para graficarlos de manera continua. La función compute_rr() toma las posiciones de los picos R y obtiene los intervalos RR dividiendo la diferencia entre picos consecutivos por la frecuencia de muestreo. La función interpolate_rr() usa esos RR ya calculados para construir una señal RR(t) suave: primero obtiene el tiempo exacto de cada intervalo RR, luego genera una escala temporal uniforme y finalmente interpola los valores para obtener una curva continua en milisegundos. Si no hay suficientes RR, ambas funciones devuelven resultados vacíos.<br>
 
 ```
 # ============================================
-# 4. PROCESAR TODO
+# 9. FUNCIÓN PRINCIPAL
 # ============================================
-
 def process_ecg_file(path):
 
-    print(f"\nCargando archivo: {path}")
+    print("\nCargando archivo:", path)
     t, x, fs = load_ecg(path)
-    print(f"Señal cargada: {len(x)} muestras — Fs={fs} Hz — dur={len(x)/fs:.1f} s")
 
-    # 1. Filtrado
-    x_f = apply_iir(x, zero_phase=True)
+    print(f"Señal cargada: {len(x)} muestras — Fs={fs:.2f} Hz")
+    print_difference_equation()
 
-    # --------------------------------------------
-    # GRÁFICA: Señal original vs filtrada (FUCSIA)
-    # --------------------------------------------
+    # -----------------------
+    # FILTRADO
+    # -----------------------
+    x_f = apply_iir(x)
+
+    plt.figure(figsize=(18,5))
+    plt.plot(t, x, alpha=0.5, label="Original")
+    plt.plot(t, x_f, color="#FF00FF", label="Filtrada")
+    plt.title("Señal Original vs Filtrada")
+    plt.legend()
+    plt.grid()
+    plt.show()
+```
+Este fragmento de la función principal carga la señal ECG desde el archivo indicado, muestra en pantalla cuántas muestras tiene y cuál es la frecuencia de muestreo estimada, imprime la ecuación en diferencias del filtro IIR que se usará y luego aplica dicho filtro a la señal para eliminar ruido sin introducir desfase. Finalmente, grafica la señal original junto con la señal filtrada, permitiendo visualizar claramente el efecto del filtrado sobre el ECG.<br>
+
+```
+
+    # -----------------------
+    # SEGMENTOS
+    # -----------------------
+    seg_len = int(seg_duration_s * fs)
+    seg1 = x_f[:seg_len]
+    seg2 = x_f[seg_len:2*seg_len]
+
+    # -----------------------
+    # DETECCIÓN R
+    # -----------------------
+    p1, _ = detect_r_peaks(seg1, fs)
+    p2, _ = detect_r_peaks(seg2, fs)
+
+    # ---------------------------------------------------------
+    #   ECG FILTRADA + PICOS R (MORADO)
+    # ---------------------------------------------------------
     plt.figure(figsize=(18,6))
-    plt.plot(t, x, label="Señal Original", alpha=0.6)
-    plt.plot(t, x_f, color="#FF00FF", label="Filtrada (fucsia)", linewidth=1.5)
-    plt.title("Comparación: Señal Original vs Señal Filtrada")
+    plt.plot(seg1, color="#FF00FF", label="ECG Filtrada")
+    plt.scatter(p1, seg1[p1], color="purple", s=25, label="R-peaks")
+    plt.title("Segmento 1 — ECG Filtrada + Picos R (Morado)")
+    plt.legend(); plt.grid(); plt.show()
+
+    plt.figure(figsize=(18,6))
+    plt.plot(seg2, color="#FF00FF", label="ECG Filtrada")
+    plt.scatter(p2, seg2[p2], color="purple", s=25, label="R-peaks")
+    plt.title("Segmento 2 — ECG Filtrada + Picos R (Morado)")
+    plt.legend(); plt.grid(); plt.show()
+
+    # -----------------------
+    # ZOOM EN QRS (Modo B)
+    # -----------------------
+    def zoom_qrs(seg, peaks, title):
+        i1 = peaks[5] - 200
+        i2 = peaks[10] + 200
+        i1 = max(0, i1)
+        i2 = min(len(seg), i2)
+        plt.figure(figsize=(18,5))
+        plt.plot(seg[i1:i2], color="#FF00FF")
+        plt.title(title)
+        plt.grid()
+        plt.show()
+
+    zoom_qrs(seg1, p1, "Zoom centrado en QRS — Segmento 1")
+    zoom_qrs(seg2, p2, "Zoom centrado en QRS — Segmento 2")
+
+```
+Este fragmento divide la señal ECG filtrada en dos segmentos de dos minutos, detecta los picos R en cada uno y luego genera visualizaciones que permiten evaluar la calidad de la detección. Primero calcula cuántas muestras corresponden a dos minutos y separa la señal en segmento 1 (reposo) y segmento 2 (lectura). Después aplica el algoritmo de detección de picos R a cada segmento para obtener las posiciones de los complejos QRS. Posteriormente grafica cada segmento mostrando la señal filtrada en magenta y los picos R marcados en color morado, facilitando la verificación visual de la detección. Finalmente, incluye una función que realiza un zoom alrededor de algunos complejos QRS para observarlos en detalle y confirmar que los picos detectados coinciden con la morfología real del QRS.<br>
+
+```
+# -----------------------
+    # RR
+    # -----------------------
+    rr1 = compute_rr(p1, fs)
+    rr2 = compute_rr(p2, fs)
+
+    t1_rr, rr1_ts = interpolate_rr(p1, rr1, fs, len(seg1))
+    t2_rr, rr2_ts = interpolate_rr(p2, rr2, fs, len(seg2))
+
+    # ---------------------------------------------------------
+    # RR(t) CON MARCADORES DE RR REALES
+    # ---------------------------------------------------------
+    plt.figure(figsize=(18,5))
+    plt.plot(t1_rr, rr1_ts, color="#FF00FF", label="RR(t) interpolado")
+    plt.scatter(p1[1:]/fs, rr1*1000, color="purple", s=30, label="RR reales")
+    plt.title("RR(t) — Segmento 1")
     plt.xlabel("Tiempo (s)")
-    plt.ylabel("Amplitud")
+    plt.ylabel("Intervalo RR (ms)")
     plt.legend()
     plt.grid()
     plt.show()
 
-    # 2. Segmentos
-    seg_len = int(seg_duration_s * fs)
-    if len(x_f) < 2*seg_len:
-        raise ValueError("La señal NO tiene mínimo 4 minutos.")
-
-    seg1 = x_f[:seg_len]
-    seg2 = x_f[seg_len:2*seg_len]
-
-    # 3. R-peaks
-    p1, integ1 = detect_r_peaks(seg1, fs)
-    p2, integ2 = detect_r_peaks(seg2, fs)
-
-    # 4. RR intervals
-    rr1 = clean_rr(compute_rr_from_peaks(p1, fs))
-    rr2 = clean_rr(compute_rr_from_peaks(p2, fs))
-
-    # 5. Estadísticas
-    mean1 = np.mean(rr1)*1000 if len(rr1)>0 else np.nan
-    sdnn1 = np.std(rr1, ddof=1)*1000 if len(rr1)>1 else np.nan
-
-    mean2 = np.mean(rr2)*1000 if len(rr2)>0 else np.nan
-    sdnn2 = np.std(rr2, ddof=1)*1000 if len(rr2)>1 else np.nan
-
-    print("\n=== SEGMENTO 1 ===")
-    print("Picos detectados:", len(p1))
-    print("RR válidos:", len(rr1))
-    print(f"Mean RR = {mean1:.2f} ms")
-    print(f"SDNN = {sdnn1:.2f} ms")
-
-    print("\n=== SEGMENTO 2 ===")
-    print("Picos detectados:", len(p2))
-    print("RR válidos:", len(rr2))
-    print(f"Mean RR = {mean2:.2f} ms")
-    print(f"SDNN = {sdnn2:.2f} ms")
-
+    plt.figure(figsize=(18,5))
+    plt.plot(t2_rr, rr2_ts, color="#FF00FF", label="RR(t) interpolado")
+    plt.scatter(p2[1:]/fs, rr2*1000, color="purple", s=30, label="RR reales")
+    plt.title("RR(t) — Segmento 2")
+    plt.xlabel("Tiempo (s)")
+    plt.ylabel("Intervalo RR (ms)")
+    plt.legend()
+    plt.grid()
+    plt.show()
 ```
-Se implementó la función process_ecg_file() para ejecutar todo el flujo de procesamiento de la señal ECG. Esta función carga el archivo seleccionado, aplica el filtro IIR para obtener la señal limpia y genera una gráfica comparativa entre la señal original y la filtrada. Posteriormente, la señal filtrada se segmenta en dos intervalos de dos minutos. Para cada segmento se detectan los picos R, se calculan los intervalos R-R y se depuran los valores no válidos. Finalmente, se obtienen las estadísticas principales de HRV en el dominio del tiempo (Mean RR y SDNN) para cada segmento y se imprimen los resultados correspondientes. <br>
+Este fragmento calcula los intervalos RR de cada segmento y genera las gráficas que muestran su evolución temporal. Primero obtiene los RR reales restando las posiciones consecutivas de los picos R y convirtiéndolos a segundos. Luego interpola estos valores para construir una señal continua RR(t), lo que permite visualizar la variabilidad latido a latido sin saltos. Después grafica, para cada segmento, la curva RR(t) en color magenta y superpone los valores reales de los intervalos RR como puntos morados, de modo que se puede comparar la interpolación con los datos originales y analizar cómo cambia el ritmo cardíaco durante el reposo y durante la lectura.<br>
 
 # PARTE C - Diagrama de Poincaré y análisis del balance autonómico
 ## Descripción
@@ -203,100 +275,15 @@ Esta parte consiste en construir el diagrama de Poincaré para cada segmento de 
 
 ## CODIGO 
 ```
-    # ============================================
-    # 6. GRÁFICAS — TODAS EN FUCSIA
-    # ============================================
-
-    # --- ECG filtrada completa ---
-    plt.figure(figsize=(18,5))
-    plt.plot(t, x_f, color="#FF00FF")
-    plt.title("ECG Filtrada (IIR) — Fucsia")
-    plt.xlabel("Tiempo (s)")
-    plt.ylabel("Amplitud (a.u.)")
-    plt.grid()
-    plt.show()
-
-    # ---------------------------
-    # SEGMENTO 1 — TODAS LAS GRÁFICAS
-    # ---------------------------
-
-    plt.figure(figsize=(18,6))
-    plt.plot(seg1, color="#FF00FF")
-    plt.plot(p1, seg1[p1], 'ro')
-    plt.title("Segmento 1 — Señal Filtrada + R-peaks (Fucsia)")
-    plt.grid()
-    plt.show()
-
-    plt.figure(figsize=(18,5))
-    plt.plot(integ1, color="#FF00FF")
-    plt.title("Integración Pan-Tompkins — Segmento 1")
-    plt.grid()
-    plt.show()
-
-    plt.figure(figsize=(7,5))
-    plt.hist(rr1*1000, bins=30, color="#FF00FF", alpha=0.8)
-    plt.title("Histograma RR — Segmento 1")
-    plt.grid()
-    plt.show()
-
-    if len(rr1)>=2:
-        plt.figure(figsize=(6,6))
-        plt.scatter(rr1[:-1]*1000, rr1[1:]*1000, color="#FF00FF", alpha=0.7)
-        plt.title("Poincaré — Segmento 1")
-        plt.grid()
-        plt.show()
 
 ```
-Se generaron las gráficas correspondientes a la visualización del procesamiento de la señal ECG. Primero se creó la gráfica de la señal filtrada completa utilizando el filtro IIR. Posteriormente se graficó el Segmento 1, mostrando tanto la señal filtrada como los picos R detectados. También se incluyó la gráfica de la señal integrada utilizada en la detección de picos bajo el esquema Pan-Tompkins. Se construyó el histograma de los intervalos R-R del Segmento 1 y, cuando fue posible, se generó el diagrama de Poincaré para este mismo segmento. Todas las gráficas fueron representadas en color fucsia para mantener consistencia visual en el análisis.<br> 
+s.<br> 
 
 ```
-    # ---------------------------
-    # SEGMENTO 2 — MISMAS GRÁFICAS
-    # ---------------------------
-
-    plt.figure(figsize=(18,6))
-    plt.plot(seg2, color="#FF00FF")
-    plt.plot(p2, seg2[p2], 'ro')
-    plt.title("Segmento 2 — Señal Filtrada + R-peaks (Fucsia)")
-    plt.grid()
-    plt.show()
-
-    plt.figure(figsize=(18,5))
-    plt.plot(integ2, color="#FF00FF")
-    plt.title("Integración Pan-Tompkins — Segmento 2")
-    plt.grid()
-    plt.show()
-
-    plt.figure(figsize=(7,5))
-    plt.hist(rr2*1000, bins=30, color="#FF00FF", alpha=0.8)
-    plt.title("Histograma RR — Segmento 2")
-    plt.grid()
-    plt.show()
-
-    if len(rr2)>=2:
-        plt.figure(figsize=(6,6))
-        plt.scatter(rr2[:-1]*1000, rr2[1:]*1000, color="#FF00FF", alpha=0.7)
-        plt.title("Poincaré — Segmento 2")
-        plt.grid()
-        plt.show()
-
-    return {
-        "t": t, "x": x, "x_f": x_f,
-        "seg1": seg1, "seg2": seg2,
-        "p1": p1, "p2": p2,
-        "rr1": rr1, "rr2": rr2,
-        "mean1_ms": mean1, "sdnn1_ms": sdnn1,
-        "mean2_ms": mean2, "sdnn2_ms": sdnn2
-    }
  
 ```
-Se generaron las gráficas correspondientes al segundo segmento de la señal ECG. Se visualizó la señal filtrada junto con los picos R detectados, la señal integrada del método Pan-Tompkins, el histograma de los intervalos R-R y el diagrama de Poincaré para este segmento. Finalmente, se retornaron las variables principales del procesamiento, incluyendo el tiempo, la señal original y filtrada, los dos segmentos, los picos detectados, los intervalos R-R y las métricas de HRV (media y SDNN) para ambos segmentos.<br>
+S <br> 
+```
 
 ```
-# ============================================
-# 7. EJECUTAR
-# ============================================
-results = process_ecg_file('/content/drive/MyDrive/SEÑAL.csv')
-
-```
-Se generaron todas las gráficas correspondientes al Segmento 2 utilizando la señal filtrada. Se visualizó la señal junto con los picos R detectados, la señal integrada tipo Pan-Tompkins, el histograma de los intervalos R-R y el diagrama de Poincaré para este segmento. Finalmente, se organizó y retornó un diccionario con todas las variables procesadas, incluyendo los segmentos, picos R, intervalos R-R y los valores de media y SDNN para ambos segmentos. <br>
+S. <br>
