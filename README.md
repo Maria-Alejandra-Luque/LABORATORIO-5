@@ -28,7 +28,7 @@ El sistema nervioso simpático actúa mediante la activación de diferentes vía
 Este sistema controla la actividad del músculo liso, del músculo cardíaco y de las glándulas. Se encarga de la respuesta de descanso, ya que participa en la disminución del ritmo cardíaco, la relajación del tracto gastrointestinal y urinario, y el aumento de la actividad glandular e intestinal. Como resultado, el sistema parasimpático promueve el almacenamiento de energía y regula funciones vitales del organismo, como la digestión y la micción.<br>
 <img width="800" height="800" alt="image" src="https://github.com/user-attachments/assets/c19dd53b-295b-4d34-bd32-27721d647de7" /><br>
 
-##  𝙀𝙛𝙚𝙘𝙩𝙤 𝙙𝙚 𝙡𝙖 𝙖𝙘𝙩𝙞𝙫𝙞𝙙𝙖𝙙 𝙨𝙞𝙢𝙥𝙖𝙩𝙞𝙘𝙖 𝙙𝙚𝙡 𝙨𝙞𝙨𝙩𝙚𝙢𝙖 𝙣𝙚𝙧𝙫𝙞𝙤𝙨𝙤 𝙖𝙪𝙩𝙤𝙣𝙤𝙢𝙤:
+##  𝙀𝙛𝙚𝙘𝙩𝙤 𝙙𝙚 𝙡𝙖 𝙖𝙘𝙩𝙞𝙫𝙞𝙙𝙖𝙙 𝙨𝙞𝙢𝙥𝙖𝙩𝙞𝙘𝙖 𝙙𝙚𝙡 𝙨𝙞𝙨𝙩𝙚𝙢𝙖 𝙣𝙚𝙧𝙫𝙞𝙤𝙨𝙤 𝙖𝙪𝙩ó𝙣𝙤𝙢𝙤:
 
 La regulación de la frecuencia cardíaca depende de la acción conjunta del sistema nervioso simpático y parasimpático. Ambos modulan la actividad de los nodos cardíacos y la contractilidad del miocardio mediante comunicación eléctrica y neuroquímica. El sistema simpático favorece el aumento de la frecuencia cardíaca, mientras que el parasimpático la reduce, relajando el corazón. El equilibrio entre ambos mantiene la homeostasis cardiovascular; cuando este balance se altera, pueden aparecer diversas condiciones y patologías.<br>
 
@@ -61,7 +61,7 @@ En esta sección se implementan las etapas de procesamiento digital necesarias p
 <img width="327" height="883" alt="image" src="imagen_2025-11-20_215036048.png" />
 
 
-## CODIGO 
+## CÓDIGO 
 ```
 # ============================================
 #      LAB ECG - PREPROCESAMIENTO + HRV
@@ -306,7 +306,7 @@ Este fragmento divide la señal ECG filtrada en dos segmentos de dos minutos, de
 ```
 Este fragmento calcula los intervalos RR de cada segmento y genera las gráficas que muestran su evolución temporal. Primero obtiene los RR reales restando las posiciones consecutivas de los picos R y convirtiéndolos a segundos. Luego interpola estos valores para construir una señal continua RR(t), lo que permite visualizar la variabilidad latido a latido sin saltos. Después grafica, para cada segmento, la curva RR(t) en color magenta y superpone los valores reales de los intervalos RR como puntos morados, de modo que se puede comparar la interpolación con los datos originales y analizar cómo cambia el ritmo cardíaco durante el reposo y durante la lectura.<br>
 
-## GRAFICAS 
+## GRÁFICAS 
 <img width="776" height="323" alt="image" src="https://github.com/user-attachments/assets/295f2bdd-be58-4a81-b024-12ebd638bab9" /><br>
 La gráfica muestra la comparación entre la señal ECG original y la señal filtrada mediante un filtro IIR de cuarto orden. La señal cruda presenta variaciones y componentes de alta frecuencia no deseados, mientras que la señal filtrada en color magenta evidencia una reducción significativa del ruido sin distorsionar la morfología del ECG. Este preprocesamiento permite resaltar los complejos QRS y preparar la señal para la detección precisa de picos R y el posterior análisis de variabilidad cardíaca (HRV).<br>
 
@@ -339,10 +339,9 @@ La gráfica muestra la variación del intervalo RR a lo largo del segundo segmen
 # PARTE C - Diagrama de Poincaré y análisis del balance autonómico
 ## Descripción
 Esta parte consiste en construir el diagrama de Poincaré para cada segmento de ECG y analizar la dispersión de los puntos para determinar cambios en la actividad simpática y vagal. Se calculan los índices CSI (simpático) y CVI (vagal) y se comparan entre reposo y lectura.<br>
-## Diagrama 
 
 
-## CODIGO 
+## CÓDIGO 
 ```
 
 ```
