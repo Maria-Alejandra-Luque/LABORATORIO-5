@@ -21,7 +21,7 @@ En esta sección se implementan las etapas de procesamiento digital necesarias p
 ## Diseño Filtro
 
 <img width="327" height="883" alt="image" src="imagen_2025-11-20_214947303.png" />
-<img width="327" height="883" alt="image" src="https://github.com/user-attachments/assets/d07f50e0-a005-4168-b820-c8ecad102284" />
+<img width="327" height="883" alt="image" src="imagen_2025-11-20_215036048.png" />
 
 
 ## CODIGO 
