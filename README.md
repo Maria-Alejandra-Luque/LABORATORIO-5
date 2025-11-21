@@ -355,6 +355,11 @@ S <br>
 
 ```
 S. <br>
+## Gráficas 
+<img width="1118" height="1074" alt="image" src="https://github.com/user-attachments/assets/4c72cd7c-10e7-45fc-96cd-baf255fc0113" /><br> 
+<img width="1107" height="1077" alt="image" src="https://github.com/user-attachments/assets/65f0ad95-3e2c-4fe5-be1b-03beece6c45f" /><br> 
+<img width="481" height="348" alt="image" src="https://github.com/user-attachments/assets/34f9e279-0cf3-4477-a058-f53114b4ee06" /><br>
+
 
 # REFERENCIAS 
 [1]Researchgate.net.de https://www.researchgate.net/figure/Figura-173-Los-sistemas-simpatico-y-parasimpatico_fig2_313160220
