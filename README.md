@@ -19,7 +19,7 @@ En esta parte se realiza la investigación teórica necesaria para comprender la
 ##  𝘼𝙘𝙩𝙞𝙫𝙞𝙙𝙖𝙙 𝙎𝙞𝙢𝙥𝙖𝙩𝙞𝙘𝙖 𝙮 𝙋𝙖𝙧𝙖𝙨𝙞𝙢𝙥𝙖𝙩𝙞𝙘𝙖 𝙙𝙚𝙡 𝙨𝙞𝙨𝙩𝙚𝙢𝙖 𝙣𝙚𝙧𝙫𝙞𝙤𝙨𝙤 𝙖𝙪𝙩𝙤𝙣𝙤𝙢𝙤 
 El cuerpo humano está preparado para mantener un equilibrio entre la actividad y el descanso. Esto es posible gracias al sistema nervioso autónomo, encargado de regular muchas funciones involuntarias del organismo. Dentro de este sistema se encuentran el sistema nervioso simpático y el sistema nervioso parasimpático, dos fuerzas opuestas que actúan de manera complementaria para preservar el bienestar y la estabilidad del cuerpo.<br>
 
-### sistema nervioso simpático
+### Sistema nervioso simpático
 Este sistema es el encargado de activar y acelerar las funciones del cuerpo, siendo responsable de la respuesta de “huida o lucha” cuando una persona se enfrenta a una situación de peligro o estrés. Su acción es crucial incluso en reposo, ya que prepara al organismo para responder ante emergencias.
 El sistema nervioso simpático actúa mediante la activación de diferentes vías, lo que provoca un aumento del ritmo cardíaco y respiratorio, elevación de la presión arterial, dilatación de las pupilas y una redistribución del flujo sanguíneo: la sangre se desvía de la piel, el estómago y los intestinos para dirigirse al cerebro, al corazón y a los músculos necesarios para ejecutar una respuesta rápida frente a la actividad simpática.<br>
 <img width="800" height="800" alt="image" src="https://github.com/user-attachments/assets/020bdc9e-a239-4702-98f8-d14481371c70" /><br>
@@ -38,7 +38,7 @@ Por otro lado, el sistema parasimpático proviene del nervio vago. Sus fibras pr
 
 <img width="235" height="214" alt="image" src="https://github.com/user-attachments/assets/be489263-4c9b-4fdd-9770-8ffe82b37113" /><br>
 
-##  𝙫𝙖𝙧𝙞𝙖𝙗𝙞𝙡𝙞𝙙𝙖𝙙 𝙙𝙚 𝙡𝙖 𝙛𝙧𝙚𝙘𝙪𝙚𝙣𝙘𝙞𝙖 𝙘𝙖𝙧𝙙𝙞𝙖𝙘𝙖 (𝙃𝙍𝘾) 𝙤𝙗𝙩𝙚𝙣𝙞𝙙𝙖 𝙖 𝙥𝙖𝙧𝙩𝙞𝙧 𝙙𝙚 𝙡𝙖 𝙨𝙚𝙣̃𝙖𝙡 𝙚𝙡𝙚𝙘𝙩𝙧𝙤𝙘𝙖𝙧𝙙𝙞𝙤𝙜𝙧𝙖𝙛𝙞𝙘𝙖 (𝙀𝘾𝙂).
+##  V𝙖𝙧𝙞𝙖𝙗𝙞𝙡𝙞𝙙𝙖𝙙 𝙙𝙚 𝙡𝙖 𝙛𝙧𝙚𝙘𝙪𝙚𝙣𝙘𝙞𝙖 𝙘𝙖𝙧𝙙𝙞𝙖𝙘𝙖 (𝙃𝙍𝘾) 𝙤𝙗𝙩𝙚𝙣𝙞𝙙𝙖 𝙖 𝙥𝙖𝙧𝙩𝙞𝙧 𝙙𝙚 𝙡𝙖 𝙨𝙚𝙣̃𝙖𝙡 𝙚𝙡𝙚𝙘𝙩𝙧𝙤𝙘𝙖𝙧𝙙𝙞𝙤𝙜𝙧𝙖𝙛𝙞𝙘𝙖 (𝙀𝘾𝙂).
 
 La variabilidad de la frecuencia cardíaca (HRV) analiza cómo cambia el tiempo entre un latido y otro del corazón, es decir, los intervalos RR obtenidos a partir del ECG. Estos cambios reflejan el equilibrio entre el sistema simpático y parasimpático, que regulan la actividad cardíaca.
 Para calcularla, primero se detectan los picos R de la señal y se mide el intervalo entre cada par consecutivo. Con esta serie de datos se aplica un análisis en el dominio del tiempo o en el dominio de la frecuencia. En el primero suelen usarse parámetros como SDNN y RMSSD, mientras que en el segundo se estudian componentes como LF y HF, cuyo cociente LF/HF permite estimar el balance autonómico.<br>
