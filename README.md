@@ -269,6 +269,36 @@ Este fragmento divide la señal ECG filtrada en dos segmentos de dos minutos, de
 ```
 Este fragmento calcula los intervalos RR de cada segmento y genera las gráficas que muestran su evolución temporal. Primero obtiene los RR reales restando las posiciones consecutivas de los picos R y convirtiéndolos a segundos. Luego interpola estos valores para construir una señal continua RR(t), lo que permite visualizar la variabilidad latido a latido sin saltos. Después grafica, para cada segmento, la curva RR(t) en color magenta y superpone los valores reales de los intervalos RR como puntos morados, de modo que se puede comparar la interpolación con los datos originales y analizar cómo cambia el ritmo cardíaco durante el reposo y durante la lectura.<br>
 
+## GRAFICAS 
+<img width="776" height="323" alt="image" src="https://github.com/user-attachments/assets/295f2bdd-be58-4a81-b024-12ebd638bab9" /><br>
+La gráfica muestra la comparación entre la señal ECG original y la señal filtrada mediante un filtro IIR de cuarto orden. La señal cruda presenta variaciones y componentes de alta frecuencia no deseados, mientras que la señal filtrada en color magenta evidencia una reducción significativa del ruido sin distorsionar la morfología del ECG. Este preprocesamiento permite resaltar los complejos QRS y preparar la señal para la detección precisa de picos R y el posterior análisis de variabilidad cardíaca (HRV).<br>
+
+<img width="746" height="268" alt="image" src="https://github.com/user-attachments/assets/e3125e82-a14b-4fe8-a626-940f35445816" /><br>
+La gráfica muestra el primer segmento de la señal ECG ya filtrada y los picos R identificados automáticamente, representados como puntos morados sobre la onda. La señal filtrada permite observar con claridad la morfología del complejo QRS, mientras que la marcación de los picos R confirma la correcta detección de los latidos durante los primeros dos minutos en reposo. Esta visualización es fundamental para validar el preprocesamiento y garantizar la precisión en el cálculo posterior de los intervalos R-R y el análisis de variabilidad cardíaca (HRV).<br>
+
+<img width="751" height="271" alt="image" src="https://github.com/user-attachments/assets/89be3987-fbc3-499e-9cfa-1ccbcef5741c" /><br>
+La gráfica del segundo segmento muestra la señal ECG filtrada durante la etapa de lectura en voz alta, junto con los picos R detectados automáticamente y marcados en color morado. Este periodo presenta una mayor variabilidad en la amplitud y en la distribución de los latidos, reflejando la influencia del esfuerzo cognitivo y vocal sobre el ritmo cardíaco. La correcta identificación de los picos R permite analizar cómo cambia la actividad cardíaca frente a una tarea activa, y sirve como base para el cálculo de los intervalos R-R y la evaluación del comportamiento autonómico en comparación con el reposo.<br>
+
+<img width="733" height="226" alt="image" src="https://github.com/user-attachments/assets/3318e234-dc6d-4a12-b563-c3a3ce73e820" /><br>
+La gráfica presenta un zoom del complejo QRS en el primer segmento, permitiendo observar con mayor detalle la morfología característica de cada latido. Al ampliar esta región, se evidencia un QRS bien definido y consistente, confirmando que el filtrado y la detección de picos R fueron precisos. Esta visualización es fundamental para validar que los puntos detectados corresponden efectivamente a los máximos del complejo QRS, garantizando la confiabilidad del cálculo posterior de los intervalos R-R y del análisis de variabilidad cardíaca.<br>
+
+<img width="743" height="224" alt="image" src="https://github.com/user-attachments/assets/51742dfe-bc27-4b31-ab43-652328c1870e" /><br>
+La gráfica muestra un zoom enfocado en los complejos QRS del segundo segmento de la señal de ECG, permitiendo observar con mayor detalle los picos asociados a la despolarización ventricular. Se aprecia un ritmo relativamente regular y amplitudes que oscilan entre aproximadamente −1.5 y +1.7 mV, lo cual es coherente con una señal cardíaca fisiológica. Este análisis resulta clave para validar la calidad del registro y preparar el procesamiento posterior, como la detección automática de picos R, segmentación de latidos o implementación de algoritmos como Pan–Tompkins.<br>
+
+<img width="764" height="232" alt="image" src="https://github.com/user-attachments/assets/6bdeb197-3d23-4f24-9759-97ad3493a1f8" /><br>
+La gráfica representa la evolución temporal del intervalo RR correspondiente al primer segmento de la señal de ECG. Se muestran los valores reales calculados a partir de los picos R y una curva interpolada que suaviza la variabilidad latido a latido. Se observa un ritmo cardíaco relativamente estable, con intervalos que oscilan mayormente entre 500 y 650 ms, salvo algunas variaciones puntuales que podrían estar asociadas a artefactos o fluctuaciones fisiológicas. Este análisis permite visualizar la dinámica de los intervalos RR y constituye la base para evaluar la variabilidad cardíaca (HRV) y explorar el estado autonómico del paciente.<br>
+
+<img width="765" height="243" alt="image" src="https://github.com/user-attachments/assets/c746fc84-4e01-46ed-93c1-3d727d4c6b73" /><br>
+La gráfica muestra la variación del intervalo RR a lo largo del segundo segmento de la señal de ECG. Los valores reales calculados a partir de los picos R se comparan con la curva interpolada, la cual permite visualizar de forma más continua la dinámica cardíaca. En este segmento se observan fluctuaciones más amplias que en el segmento anterior, con picos aislados que superan los 1200 ms e indican posibles latidos ectópicos o irregularidades transitorias. Aun así, el patrón general permanece dentro de un rango fisiológico, lo que permite usar este segmento para el análisis de variabilidad cardíaca (HRV) y la evaluación del balance autonómico.<br>
+                                                                                                                                    
+
+
+
+
+
+
+
+
 # PARTE C - Diagrama de Poincaré y análisis del balance autonómico
 ## Descripción
 Esta parte consiste en construir el diagrama de Poincaré para cada segmento de ECG y analizar la dispersión de los puntos para determinar cambios en la actividad simpática y vagal. Se calculan los índices CSI (simpático) y CVI (vagal) y se comparan entre reposo y lectura.<br>
