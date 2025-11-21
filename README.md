@@ -338,7 +338,7 @@ La gráfica muestra la variación del intervalo RR a lo largo del segundo segmen
 
 # PARTE C - Diagrama de Poincaré y análisis del balance autonómico
 ## Descripción
-Esta parte consiste en construir el diagrama de Poincaré para cada segmento de ECG y analizar la dispersión de los puntos para determinar cambios en la actividad simpática y vagal. Se calculan los índices CSI (simpático) y CVI (vagal) y se comparan entre reposo y lectura.<br>
+Esta parte consiste en construir el diagrama de Poincaré para cada segmento de ECG y analizar la dispersión de los puntos para determinar cambios en la actividad simpática y parasimpatica. Se calculan los índices CSI (simpático) y CVI (vagal) y se comparan entre reposo y lectura.<br>
 
 
 ## CÓDIGO 
@@ -418,22 +418,14 @@ print(f"CSI = {CSI2:.4f}")
 print("\n==========================================")
 
 ```
-s.<br> 
+En la Parte C del código se utilizan los intervalos R-R obtenidos previamente para generar el diagrama de Poincaré y calcular los índices SD1, SD2, CVI y CSI. El código primero convierte los intervalos R-R a milisegundos y luego construye la gráfica Poincaré, que representa RR(n) frente a RR(n+1), permitiendo visualizar cómo varía el intervalo entre latidos consecutivos. Esto nos sirvio para la representación, para analizar la variabilidad cardiaca de manera gráfica y obtener SD1 y SD2, que son medidas matemáticas de la dispersión de los puntos. Con estos valores, el código calculo CVI y CSI, que son índices usados para cuantificar patrones de variabilidad en la señal del ECG. En resumen, la Parte C se implemento para la generación del diagrama de Poincaré y el cálculo automático de sus índices asociados.
 
-```
- 
-```
-S <br> 
-```
-
-```
-S. <br>
 ## Gráficas 
 
 <img width="518" height="480" alt="image" src="https://github.com/user-attachments/assets/b094e4cc-f0f9-41f8-ade8-c17aad8c2630" />
 <img width="501" height="500" alt="image" src="https://github.com/user-attachments/assets/c752a722-cd5e-414a-9ace-ee02c911898a" />
 <img width="252" height="198" alt="image" src="https://github.com/user-attachments/assets/51d84049-fe8d-4f10-b0e2-e64cfa37554f" />
-
+Los diagramas de Poincaré muestran un comportamiento claramente diferente entre el segmento de reposo y el segmento de lectura. En reposo, la nube de puntos es compacta y con poca dispersión, indicando un ritmo cardíaco estable y una baja variabilidad, coherente con un predominio parasimpático. Durante la lectura en voz alta, la nube aumenta su dispersión tanto en SD1 como en SD2, reflejando una mayor variabilidad instantánea y a largo plazo. Los índices CSI y CVI también aumentan, lo que sugiere una mayor activación simpática asociada al esfuerzo cognitivo y la variación respiratoria. En conjunto, los resultados evidencian que la lectura en voz alta genera un incremento en la variabilidad cardíaca y activa el sistema nervioso autónomo en comparación con el estado de reposo.
 
 
 
