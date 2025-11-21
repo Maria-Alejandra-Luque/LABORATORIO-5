@@ -52,10 +52,10 @@ La HRV se ha convertido en un indicador útil tanto en investigación como en cl
 # PARTE B - Preprocesamiento, filtrado, detección de picos R y HRV en dominio del tiempo
 ## Descripción
 En esta sección se implementan las etapas de procesamiento digital necesarias para limpiar la señal ECG, extraer los picos R y calcular los intervalos R-R. La señal es filtrada utilizando un filtro IIR diseñado por el estudiante, posteriormente se divide según las dos condiciones experimentales y se obtiene la serie temporal de HRV para cada segmento. <br> 
-##Diagrama 
+## Diagrama 
 <img width="800" height="1448" alt="Infografía de periódico moderno ordenado colorido" src="https://github.com/user-attachments/assets/75472c18-b002-4268-877e-0cdedf6e2a97" /><br> 
 
-## Diseño Filtro
+# Diseño Filtro
 
 <img width="327" height="883" alt="image" src="imagen_2025-11-20_214947303.png" />
 <img width="327" height="883" alt="image" src="imagen_2025-11-20_215036048.png" />
