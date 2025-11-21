@@ -343,6 +343,79 @@ Esta parte consiste en construir el diagrama de Poincaré para cada segmento de 
 
 ## CÓDIGO 
 ```
+#              PARTE C - LAB ECG
+#       DIAGRAMA DE POINCARÉ + CVI / CSI
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+# 1. FUNCIONES — PARTE C
+   
+    # Convertir a ms
+    rr_ms = rr * 1000.0
+    
+    # Mínimo 3 intervalos
+    if len(rr_ms) < 3:
+        return np.nan, np.nan, np.nan, np.nan
+    
+    # Cálculo clásico
+    sd1 = np.std((rr_ms[1:] - rr_ms[:-1]) / np.sqrt(2))
+    sd2 = np.std((rr_ms[1:] + rr_ms[:-1]) / np.sqrt(2))
+
+    # Protecciones numéricas
+    CVI = np.log10(max(sd1 * sd2, 1e-12))
+    CSI = sd2 / max(sd1, 1e-12)
+
+    return sd1, sd2, CVI, CSI
+
+
+def plot_poincare(rr, title):
+    """
+    Genera el diagrama de Poincaré RR(n) vs RR(n+1) en MS
+    """
+    rr_ms = rr * 1000.0
+
+    plt.figure(figsize=(6, 6))
+    plt.scatter(rr_ms[:-1], rr_ms[1:], color="#FF00FF", s=20)
+    plt.title(title)
+    plt.xlabel("RR(n) [ms]")
+    plt.ylabel("RR(n+1) [ms]")
+    plt.grid()
+    plt.show()
+
+
+# 2. CÁLCULO DE SD1, SD2, CVI, CSI
+#    (USANDO rr1 y rr2 DE LA PARTE B)
+
+
+sd1_1, sd2_1, CVI1, CSI1 = poincare_indices_ms(rr1)
+sd1_2, sd2_2, CVI2, CSI2 = poincare_indices_ms(rr2)
+
+
+# 3. GRÁFICAS DE POINCARÉ
+
+plot_poincare(rr1, "Poincaré — Segmento 1 (Reposo)")
+plot_poincare(rr2, "Poincaré — Segmento 2 (Lectura)")
+
+
+# 4. RESULTADOS NUMÉRICOS
+
+
+print("\n========== ÍNDICES DE POINCARÉ ==========\n")
+
+print("SEGMENTO 1 — REPOSO")
+print(f"SD1 = {sd1_1:.2f} ms")
+print(f"SD2 = {sd2_1:.2f} ms")
+print(f"CVI = {CVI1:.4f}")
+print(f"CSI = {CSI1:.4f}")
+
+print("\nSEGMENTO 2 — LECTURA")
+print(f"SD1 = {sd1_2:.2f} ms")
+print(f"SD2 = {sd2_2:.2f} ms")
+print(f"CVI = {CVI2:.4f}")
+print(f"CSI = {CSI2:.4f}")
+
+print("\n==========================================")
 
 ```
 s.<br> 
