@@ -8,8 +8,9 @@ Este laboratorio tiene como propósito analizar la variabilidad de la frecuencia
 - Comparar la respuesta autonómica del sujeto entre reposo y lectura en voz alta. <br>
 - Aplicar herramientas de análisis temporal y no lineal (diagrama de Poincaré) para caracterizar la HRV.<br>
 - Interpretar resultados fisiológicos relacionados con actividad simpática y parasimpática. <br> 
-
 ## PROCEDIMIENTO 
+<img width="427" height="583" alt="image" src="https://github.com/user-attachments/assets/d07f50e0-a005-4168-b820-c8ecad102284" />
+
 # PARTE A - Fundamento teórico y adquisición de señal
 ## Descripción 
 En esta parte se realiza la investigación teórica necesaria para comprender la variabilidad de la frecuencia cardiaca (HRV) y su relación con el sistema nervioso autónomo. Luego, se adquiere la señal ECG de un sujeto en dos condiciones distintas: reposo y lectura en voz alta, con el fin de analizar cómo cambia el balance simpático-parasimpático. <br> 
