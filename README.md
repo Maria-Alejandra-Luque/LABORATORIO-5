@@ -191,6 +191,11 @@ def process_ecg_file(path):
 ```
 Se implementó la función process_ecg_file() para ejecutar todo el flujo de procesamiento de la señal ECG. Esta función carga el archivo seleccionado, aplica el filtro IIR para obtener la señal limpia y genera una gráfica comparativa entre la señal original y la filtrada. Posteriormente, la señal filtrada se segmenta en dos intervalos de dos minutos. Para cada segmento se detectan los picos R, se calculan los intervalos R-R y se depuran los valores no válidos. Finalmente, se obtienen las estadísticas principales de HRV en el dominio del tiempo (Mean RR y SDNN) para cada segmento y se imprimen los resultados correspondientes. <br>
 
+# PARTE C - Diagrama de Poincaré y análisis del balance autonómico
+## Descripción
+Esta parte consiste en construir el diagrama de Poincaré para cada segmento de ECG y analizar la dispersión de los puntos para determinar cambios en la actividad simpática y vagal. Se calculan los índices CSI (simpático) y CVI (vagal) y se comparan entre reposo y lectura.<br>
+
+## CODIGO 
 ```
     # ============================================
     # 6. GRÁFICAS — TODAS EN FUCSIA
@@ -289,8 +294,3 @@ results = process_ecg_file('/content/drive/MyDrive/SEÑAL.csv')
 
 ```
 Se generaron todas las gráficas correspondientes al Segmento 2 utilizando la señal filtrada. Se visualizó la señal junto con los picos R detectados, la señal integrada tipo Pan-Tompkins, el histograma de los intervalos R-R y el diagrama de Poincaré para este segmento. Finalmente, se organizó y retornó un diccionario con todas las variables procesadas, incluyendo los segmentos, picos R, intervalos R-R y los valores de media y SDNN para ambos segmentos. <br>
-
-
-# PARTE C - Diagrama de Poincaré y análisis del balance autonómico
-## Descripción
-Esta parte consiste en construir el diagrama de Poincaré para cada segmento de ECG y analizar la dispersión de los puntos para determinar cambios en la actividad simpática y vagal. Se calculan los índices CSI (simpático) y CVI (vagal) y se comparan entre reposo y lectura.<br>
