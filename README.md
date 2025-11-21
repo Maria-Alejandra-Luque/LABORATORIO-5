@@ -48,8 +48,14 @@ La HRV se ha convertido en un indicador útil tanto en investigación como en cl
 
 ##  𝘿𝙞𝙖𝙜𝙧𝙖𝙢𝙖 𝙙𝙚 𝙥𝙤𝙞𝙣𝙘𝙖𝙧𝙚 𝙘𝙤𝙢𝙤 𝙝𝙚𝙧𝙧𝙖𝙢𝙞𝙚𝙣𝙩𝙖 𝙙𝙚 𝙖𝙣𝙖𝙡𝙞𝙨𝙞𝙨 𝙙𝙚 𝙡𝙖 𝙎𝙚𝙣̃𝙖𝙡 𝙍-
 El diagrama de Poincaré es una herramienta empleada para el análisis no lineal de la variabilidad de la frecuencia cardiaca a partir de la serie de intervalos R-R, es decir, los tiempos entre latidos consecutivos. Mediante una transformación matemática, esta información se representa de forma gráfica para visualizar la dinámica del ritmo cardíaco. En este método, cada intervalo R-R se coloca en relación con el siguiente (RRₙ frente a RRₙ₊₁), generando una nube de puntos en un plano. La forma y dispersión de esta nube reflejan el comportamiento dinámico del sistema cardiovascular, permitiendo identificar niveles de regularidad, variabilidad o patrones particulares. Al ser una representación bidimensional, facilita la comprensión de cómo cambian los intervalos entre latidos a lo largo del tiempo y ofrece una visión más clara del comportamiento general del sistema nervioso autónomo.
-<img width="974" height="1021" alt="image" src="https://github.com/user-attachments/assets/92e37d24-8819-431b-aceb-ed00e0169506" /><br>
 
+<img width="112" height="116" alt="image" src="https://github.com/user-attachments/assets/d75f40f5-f904-4600-9922-5b3e23fb4aa2" /><br>
+
+
+Cuando el diagrama de Poincaré muestra una figura con forma de elipse estrecha y alargada, esto se interpreta como una baja variabilidad cardiaca. En esta condición, los intervalos entre latidos varían muy poco, lo cual sugiere que el sistema nervioso autónomo tiene una capacidad limitada para adaptarse a cambios internos o externos. En contraste, una figura más amplia, dispersa o aproximada a un círculo indica una mayor variabilidad cardíaca y un mejor equilibrio entre las ramas simpática y parasimpática.
+
+A diferencia de los métodos lineales tradicionales, el diagrama de Poincaré aporta una perspectiva geométrica y topológica de la dinámica del ritmo cardíaco, permitiendo identificar comportamientos no lineales que no pueden ser detectados mediante estadísticas convencionales. Por esta razón, se utiliza con frecuencia para analizar la serie R-R y evaluar el control autonómico del corazón en situaciones de reposo, estrés o enfermedad.
+<img width="146" height="151" alt="image" src="https://github.com/user-attachments/assets/5f0d411d-16bc-4f6b-9875-2bffc1d23085" /><br>
 
 
 # PARTE B - Preprocesamiento, filtrado, detección de picos R y HRV en dominio del tiempo
