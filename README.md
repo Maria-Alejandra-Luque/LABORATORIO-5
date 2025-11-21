@@ -15,6 +15,39 @@ Este laboratorio tiene como propósito analizar la variabilidad de la frecuencia
 ## Descripción 
 En esta parte se realiza la investigación teórica necesaria para comprender la variabilidad de la frecuencia cardiaca (HRV) y su relación con el sistema nervioso autónomo. Luego, se adquiere la señal ECG de un sujeto en dos condiciones distintas: reposo y lectura en voz alta, con el fin de analizar cómo cambia el balance simpático-parasimpático. <br> 
 
+##  𝘼𝙘𝙩𝙞𝙫𝙞𝙙𝙖𝙙 𝙎𝙞𝙢𝙥𝙖𝙩𝙞𝙘𝙖 𝙮 𝙋𝙖𝙧𝙖𝙨𝙞𝙢𝙥𝙖𝙩𝙞𝙘𝙖 𝙙𝙚𝙡 𝙨𝙞𝙨𝙩𝙚𝙢𝙖 𝙣𝙚𝙧𝙫𝙞𝙤𝙨𝙤 𝙖𝙪𝙩𝙤𝙣𝙤𝙢𝙤 
+El cuerpo humano está preparado para mantener un equilibrio entre la actividad y el descanso. Esto es posible gracias al sistema nervioso autónomo, encargado de regular muchas funciones involuntarias del organismo. Dentro de este sistema se encuentran el sistema nervioso simpático y el sistema nervioso parasimpático, dos fuerzas opuestas que actúan de manera complementaria para preservar el bienestar y la estabilidad del cuerpo.<br>
+
+### sistema nervioso simpático
+Este sistema es el encargado de activar y acelerar las funciones del cuerpo, siendo responsable de la respuesta de “huida o lucha” cuando una persona se enfrenta a una situación de peligro o estrés. Su acción es crucial incluso en reposo, ya que prepara al organismo para responder ante emergencias.
+El sistema nervioso simpático actúa mediante la activación de diferentes vías, lo que provoca un aumento del ritmo cardíaco y respiratorio, elevación de la presión arterial, dilatación de las pupilas y una redistribución del flujo sanguíneo: la sangre se desvía de la piel, el estómago y los intestinos para dirigirse al cerebro, al corazón y a los músculos necesarios para ejecutar una respuesta rápida frente a la actividad simpática.<br>
+<img width="800" height="800" alt="image" src="https://github.com/user-attachments/assets/020bdc9e-a239-4702-98f8-d14481371c70" /><br>
+
+### Sistema nervioso parasimpatico
+Este sistema controla la actividad del músculo liso, del músculo cardíaco y de las glándulas. Se encarga de la respuesta de descanso, ya que participa en la disminución del ritmo cardíaco, la relajación del tracto gastrointestinal y urinario, y el aumento de la actividad glandular e intestinal. Como resultado, el sistema parasimpático promueve el almacenamiento de energía y regula funciones vitales del organismo, como la digestión y la micción.<br>
+<img width="800" height="800" alt="image" src="https://github.com/user-attachments/assets/c19dd53b-295b-4d34-bd32-27721d647de7" /><br>
+
+##  𝙀𝙛𝙚𝙘𝙩𝙤 𝙙𝙚 𝙡𝙖 𝙖𝙘𝙩𝙞𝙫𝙞𝙙𝙖𝙙 𝙨𝙞𝙢𝙥𝙖𝙩𝙞𝙘𝙖 𝙙𝙚𝙡 𝙨𝙞𝙨𝙩𝙚𝙢𝙖 𝙣𝙚𝙧𝙫𝙞𝙤𝙨𝙤 𝙖𝙪𝙩𝙤𝙣𝙤𝙢𝙤:
+
+La regulación de la frecuencia cardíaca depende de la acción conjunta del sistema nervioso simpático y parasimpático. Ambos modulan la actividad de los nodos cardíacos y la contractilidad del miocardio mediante comunicación eléctrica y neuroquímica. El sistema simpático favorece el aumento de la frecuencia cardíaca, mientras que el parasimpático la reduce, relajando el corazón. El equilibrio entre ambos mantiene la homeostasis cardiovascular; cuando este balance se altera, pueden aparecer diversas condiciones y patologías.<br>
+
+El corazón recibe inervación de ambas ramas del sistema nervioso autónomo a través del plexo cardíaco, situado alrededor de la base del corazón y de los grandes vasos. La inervación simpática se origina en la médula espinal a nivel torácico: las fibras preganglionares llegan al plexo y se distribuyen hacia los nodos SA, AV y el miocardio, liberando noradrenalina sobre los receptores beta-1 adrenérgicos, lo que incrementa la contractilidad y la frecuencia cardíaca.<br>
+
+Por otro lado, el sistema parasimpático proviene del nervio vago. Sus fibras preganglionares hacen sinapsis en ganglios intrínsecos ubicados en la grasa cardíaca y la pared auricular. Luego liberan acetilcolina (ACh) sobre receptores muscarínicos M2 acoplados a proteínas G, lo que abre canales de potasio e hiperpolariza la membrana del nodo SA, alejando el potencial de membrana del umbral. Además, se reduce el AMPc y con ello la velocidad de conducción, ralentizando la despolarización espontánea y disminuyendo la contractilidad auricular y la frecuencia cardíaca.<br>
+
+<img width="235" height="214" alt="image" src="https://github.com/user-attachments/assets/be489263-4c9b-4fdd-9770-8ffe82b37113" /><br>
+
+##  𝙫𝙖𝙧𝙞𝙖𝙗𝙞𝙡𝙞𝙙𝙖𝙙 𝙙𝙚 𝙡𝙖 𝙛𝙧𝙚𝙘𝙪𝙚𝙣𝙘𝙞𝙖 𝙘𝙖𝙧𝙙𝙞𝙖𝙘𝙖 (𝙃𝙍𝘾) 𝙤𝙗𝙩𝙚𝙣𝙞𝙙𝙖 𝙖 𝙥𝙖𝙧𝙩𝙞𝙧 𝙙𝙚 𝙡𝙖 𝙨𝙚𝙣̃𝙖𝙡 𝙚𝙡𝙚𝙘𝙩𝙧𝙤𝙘𝙖𝙧𝙙𝙞𝙤𝙜𝙧𝙖𝙛𝙞𝙘𝙖 (𝙀𝘾𝙂).
+
+La variabilidad de la frecuencia cardíaca (HRV) analiza cómo cambia el tiempo entre un latido y otro del corazón, es decir, los intervalos RR obtenidos a partir del ECG. Estos cambios reflejan el equilibrio entre el sistema simpático y parasimpático, que regulan la actividad cardíaca.
+Para calcularla, primero se detectan los picos R de la señal y se mide el intervalo entre cada par consecutivo. Con esta serie de datos se aplica un análisis en el dominio del tiempo o en el dominio de la frecuencia. En el primero suelen usarse parámetros como SDNN y RMSSD, mientras que en el segundo se estudian componentes como LF y HF, cuyo cociente LF/HF permite estimar el balance autonómico.<br>
+
+La HRV se ha convertido en un indicador útil tanto en investigación como en clínica. Una variabilidad alta suele relacionarse con buena salud y adaptación fisiológica, mientras que una variabilidad baja puede asociarse con estrés o alteraciones autonómicas. Por ello, el análisis de HRV a partir del ECG es considerado un método no invasivo y confiable para evaluar el control nervioso del corazón.<br> 
+<img width="1508" height="823" alt="image" src="https://github.com/user-attachments/assets/6fa7fa5f-ad91-4ef0-8d71-5e6c6b486071" /><br>
+
+
+
+
 # PARTE B - Preprocesamiento, filtrado, detección de picos R y HRV en dominio del tiempo
 ## Descripción
 En esta sección se implementan las etapas de procesamiento digital necesarias para limpiar la señal ECG, extraer los picos R y calcular los intervalos R-R. La señal es filtrada utilizando un filtro IIR diseñado por el estudiante, posteriormente se divide según las dos condiciones experimentales y se obtiene la serie temporal de HRV para cada segmento. <br> 
@@ -317,3 +350,10 @@ S <br>
 
 ```
 S. <br>
+
+# REFERENCIAS 
+[1]Researchgate.net.de https://www.researchgate.net/figure/Figura-173-Los-sistemas-simpatico-y-parasimpatico_fig2_313160220
+
+[2]Sistema nervioso simpático. (2023, 30 octubre). Kenhub. https://www.kenhub.com/es/library/anatomia-es/sistema-nervioso-simpatico
+
+[3]Sistema nervioso parasimpático. (2023, 30 octubre). Kenhub. https://www.kenhub.com/es/library/anatomia-es/sistema-nervioso-parasimpatico 
